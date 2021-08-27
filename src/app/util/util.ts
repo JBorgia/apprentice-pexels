@@ -1,22 +1,17 @@
-// Utility function
 export class Util {
-
-  /*
-    class manipulation functions
-  */
-  hasClass(el: any, className: any) {
+  static hasClass(el: any, className: any) {
     if (el.classList) return el.classList.contains(className);
     else return !!el.getAttribute('class').match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
   };
 
-  addClass(el: any, className: any) {
+  static addClass(el: any, className: any) {
     var classList = className.split(' ');
     if (el.classList) el.classList.add(classList[0]);
     else if (!this.hasClass(el, classList[0])) el.setAttribute('class', el.getAttribute('class') +  " " + classList[0]);
     if (classList.length > 1) this.addClass(el, classList.slice(1).join(' '));
   };
 
-  removeClass(el: any, className: any) {
+  static removeClass(el: any, className: any) {
     var classList = className.split(' ');
     if (el.classList) el.classList.remove(classList[0]);
     else if(this.hasClass(el, classList[0])) {
@@ -26,15 +21,14 @@ export class Util {
     if (classList.length > 1) this.removeClass(el, classList.slice(1).join(' '));
   };
 
-  toggleClass(el: any, className: any, bool: boolean) {
+  static toggleClass(el: any, className: any, bool: boolean) {
     if(bool) this.addClass(el, className);
     else this.removeClass(el, className);
   };
 
-  setAttributes(el: any, attrs: any) {
+  static setAttributes(el: any, attrs: any) {
     for(var key in attrs) {
       el.setAttribute(key, attrs[key]);
     }
   };
-
 }

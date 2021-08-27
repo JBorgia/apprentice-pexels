@@ -8,7 +8,6 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { UtilService } from './services/util.service';
 import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     AngularFirestoreModule,
     ReactiveFormsModule
   ],
-  providers: [UtilService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { UtilService } from '../services/util.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Util } from '../util/util';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private util: UtilService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -76,27 +75,28 @@ export class HeaderComponent implements OnInit {
 
   checkSimpleNavigation(currentTop: any): void {
     if (this.previousTop - currentTop > this.scrollDelta) {
-      this.util.removeClass(this.mainHeader.nativeElement, 'is-header-hidden');
+
+      Util.removeClass(this.mainHeader.nativeElement, 'is-header-hidden');
     } else if (
       currentTop - this.previousTop > this.scrollDelta &&
       currentTop > this.scrollOffset
     ) {
-      this.util.addClass(this.mainHeader.nativeElement, 'is-header-hidden');
+      Util.addClass(this.mainHeader.nativeElement, 'is-header-hidden');
     }
   }
 
   handleClick(event: Event, headerEl: any, headerNavEl: any) {
     event.preventDefault();
-    const status = !this.util.hasClass(event.target, 'anim-menu-btn--state-b');
-    const headerStatus = !this.util.hasClass(headerEl, 'f-header--expanded');
-    const headerNavStatus = !this.util.hasClass(
+    const status = !Util.hasClass(event.target, 'anim-menu-btn--state-b');
+    const headerStatus = !Util.hasClass(headerEl, 'f-header--expanded');
+    const headerNavStatus = !Util.hasClass(
       headerNavEl,
       'f-header__nav--is-visible'
     );
 
-    this.util.toggleClass(event.target, 'anim-menu-btn--state-b', status);
-    this.util.toggleClass(headerEl, 'f-header--expanded', headerStatus);
-    this.util.toggleClass(
+    Util.toggleClass(event.target, 'anim-menu-btn--state-b', status);
+    Util.toggleClass(headerEl, 'f-header--expanded', headerStatus);
+    Util.toggleClass(
       headerNavEl,
       'f-header__nav--is-visible',
       headerNavStatus
