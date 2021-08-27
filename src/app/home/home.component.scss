@@ -1,0 +1,78 @@
+:host {
+  overflow: auto;
+}
+
+section {
+  height: 100%;
+}
+
+.gallery {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.gallery__column {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  margin-right: var(--space-md);
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+
+.gallery__item {
+  width: 100%;
+  position: relative;
+  margin-bottom: var(--space-md);
+  border-radius: 3px;
+}
+
+.gallery__link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.gallery__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gallery__item-loading {
+  width: 100%;
+  display: block;
+
+  animation-duration: 2.2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: shimmer;
+  animation-timing-function: linear;
+  background: #ddd;
+  background: linear-gradient(to right, #f6f6f6 8%, #f0f0f0 18%, #f6f6f6 33%);
+  background-size: 1200px 100%;
+}
+
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1200px 0;
+  }
+  100% {
+    background-position: 1200px 0;
+  }
+}

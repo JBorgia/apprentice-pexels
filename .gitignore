@@ -43,3 +43,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Other
+firebaseConfig.ts
+firestore.rules
+firestore.indexes.json
+firebase.json
+.firebaserc

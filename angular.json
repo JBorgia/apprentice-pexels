@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "pexels-project": {
+    "apprentice-pexels": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,25 +15,38 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/pexels-project",
+            "outputPath": "dist/apprentice-pexels",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "firebase/app",
+              "@firebase/app",
+              "@angular/fire",
+              "@firebase/util",
+              "@firebase/component",
+              "@firebase/firestore"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/assets/base.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets/base"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -72,10 +85,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "pexels-project:build:production"
+              "browserTarget": "apprentice-pexels:build:production"
             },
             "development": {
-              "browserTarget": "pexels-project:build:development"
+              "browserTarget": "apprentice-pexels:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +96,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "pexels-project:build"
+            "browserTarget": "apprentice-pexels:build"
           }
         },
         "test": {
@@ -107,5 +120,5 @@
       }
     }
   },
-  "defaultProject": "pexels-project"
+  "defaultProject": "apprentice-pexels"
 }

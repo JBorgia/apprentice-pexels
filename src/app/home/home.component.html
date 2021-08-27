@@ -1,0 +1,49 @@
+<!-- <div>
+  <button (click)='isPauseScroll = !isPauseScroll'>Next</button>
+</div> -->
+<section class="padding-y-lg">
+  <div
+  class="container max-width-adaptive-lg"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollDisabled]="isPauseScroll"
+  (scrolled)="onScroll()">
+    <div class="gallery">
+
+      <ng-container *ngIf="posts$ | async as pexelColumns">
+
+        <div class="gallery__column" *ngFor="let pexelColumn of pexelColumns; let i = index">
+          <div
+            class="gallery__item gallery__loading"
+            *ngFor="let pexelPhoto of pexelColumn"
+            [ngStyle]="{ 'padding-top': pexelPhoto.aspectRatioPadding + '%'}">
+
+            <!-- Link Markup -->
+            <a class="gallery__link" [routerLink]="" (click)="open(modalTemplate)">
+              <img class="gallery__image"
+                srcset="{{pexelPhoto.imageMap.toString()}}"
+                sizes="{{pexelPhoto.imageSize.toString()}}"
+                [src]="pexelPhoto.src.original">
+            </a>
+            <!-- Modal Template -->
+            <ng-template #modalTemplate>
+              <h1>{{ pexelPhoto.photographer }}</h1>
+              <img class="gallery__image"
+                srcset="{{pexelPhoto.imageMap.toString()}}"
+                sizes="{{pexelPhoto.imageSize.toString()}}"
+                [src]="pexelPhoto.src.original">
+            </ng-template>
+          </div>
+        </div>
+
+      </ng-container>
+
+    </div>
+  </div>
+</section>
+
+<ng-template #imageLoadingTemplate>
+  <div class="gallery__loading"></div>
+</ng-template>
+
+<!-- <lib-modal id="modal-1"></lib-modal> -->
