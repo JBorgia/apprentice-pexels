@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Util } from '../util/util';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,8 @@ export class HeaderComponent implements OnInit {
   submitted = false;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,22 @@ export class HeaderComponent implements OnInit {
     this.windowScroll();
   }
 
-  get f() { return this.registerForm.controls; }
+  get userPrefs() {
+    return this.themeService.userPrefs$;
+  }
+
+  get f() {
+    return this.registerForm.controls;
+  }
+
+  handleThemeChange(selectedTheme: string | null) {
+    if (selectedTheme) {
+      let theme = (selectedTheme === 'light-theme') ? 'dark-theme' : 'light-theme';
+      this.themeService.themeSubject$.next({ theme });
+      localStorage.setItem('theme', theme);
+      this.themeService.setActiveTheme(selectedTheme);
+    }
+}
 
   onSubmit() {
       this.submitted = true;

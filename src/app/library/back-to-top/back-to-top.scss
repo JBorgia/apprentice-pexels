@@ -7,7 +7,7 @@
 .back-to-top {
   position: fixed;
   right: var(--space-md);
-  bottom: var(--space-xxl);
+  bottom: calc(var(--space-xl) + 1.2em);
   padding: var(--space-xs);
   z-index: var(--zindex-fixed-element);
   border-radius: var(--radius-md);

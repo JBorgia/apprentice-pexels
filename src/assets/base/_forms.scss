@@ -1,7 +1,7 @@
 .form-control {
   font-size: var(--form-control-font-size, 1em);
   padding-top: var(--form-control-padding-y, 0.5em);
-  padding-bottom: var(--form-control-padding-y, 0.5em);
+  padding-bottom: var(--form-control-padding-y, 0.4em);
   padding-left: var(--form-control-padding-x, 0.75em);
   padding-right: var(--form-control-padding-x, 0.75em);
   border-radius: var(--form-control-radius, 0.25em);
@@ -13,6 +13,7 @@
 
   &:focus {
     border: 2px solid var(--color-primary);
+    box-shadow: 0px 0px 0px 2px alpha(var(--color-contrast-higher), 0.15);
   }
 }
 

@@ -11,9 +11,14 @@
 
         <div class="gallery__column" *ngFor="let pexelColumn of pexelColumns; let i = index">
           <div
-            class="gallery__item gallery__loading"
+            class="gallery__item"
             *ngFor="let pexelPhoto of pexelColumn"
             [ngStyle]="{ 'padding-top': pexelPhoto.aspectRatioPadding + '%'}">
+
+            <div class="spinner">
+              <div class="double-bounce1"></div>
+              <div class="double-bounce2"></div>
+            </div>
 
             <!-- Link Markup -->
             <a class="gallery__link" [routerLink]="" (click)="open(modalTemplate)">
@@ -26,8 +31,16 @@
             <!-- Modal Template -->
             <ng-template #modalTemplate>
               <header class="modal__header bg-contrast-lower padding-y-sm padding-x-md flex items-center justify-between shadow-md">
-                <div>
-                  <h4 class="text-truncate">{{ pexelPhoto.photographer }}</h4>
+                <div class="flex items-center">
+                  <svg class="icon" viewBox="0 0 32 32">
+                    <g>
+                      <path d="M22,20.3H10c-5.3,0-9.6,4.3-9.6,9.7c0,1,0.7,1.7,1.6,1.7h28c1,0,1.7-0.7,1.7-1.7C31.7,24.7,27.3,20.3,22,20.3z M10,23.7h12
+                      c2.9,0,5.4,2,6.1,4.7H3.9C4.6,25.6,7.1,23.7,10,23.7z"/>
+                      <path d="M16,19.7c4.8,0,8.7-3.9,8.7-8.7V9c0-4.8-3.9-8.6-8.7-8.6S7.4,4.2,7.4,9v2C7.4,15.8,11.2,19.7,16,19.7z M16,3.6
+                      c3,0,5.3,2.4,5.3,5.4v2c0,3-2.4,5.4-5.3,5.4S10.6,14,10.6,11V9C10.6,6,13,3.6,16,3.6z"/>
+                    </g>
+                  </svg>
+                  <h4 class="margin-left-xs">{{ pexelPhoto.photographer }}</h4>
                 </div>
                 <div class="flex justify-end gap-xs">
                   <button class="btn btn--primary">Download</button>
