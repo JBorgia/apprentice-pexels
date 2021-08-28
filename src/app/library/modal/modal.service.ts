@@ -37,7 +37,7 @@ export class ModalService {
   resolveNgContent<T>(content: Content<T | null>) {
     if (typeof content === 'string') {
       const element = this.document.createTextNode(content);
-      return [[element]];
+      return [element];
     }
 
     if (content instanceof TemplateRef) {

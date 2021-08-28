@@ -24,6 +24,11 @@ section {
   }
 }
 
+.modal__header {
+  position: sticky;
+  top: 0;
+}
+
 .gallery__item {
   width: 100%;
   position: relative;

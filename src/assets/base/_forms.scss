@@ -5,11 +5,15 @@
   padding-left: var(--form-control-padding-x, 0.75em);
   padding-right: var(--form-control-padding-x, 0.75em);
   border-radius: var(--form-control-radius, 0.25em);
-
   line-height: 1.2;
   background-color: var(--color-bg);
   border: 2px solid var(--color-contrast-low);
   transition: 0.2s;
+  outline: none;
+
+  &:focus {
+    border: 2px solid var(--color-primary);
+  }
 }
 
 .form-legend {
@@ -21,44 +25,4 @@
 
 .form-label {
   display: inline-block;
-}
-
-// error message - ⚠️ deprecated
-.form__msg-error,
-.form-error-msg {
-  color: var(--color-error, hsl(349, 75%, 51%));
-  font-size: var(--text-sm, 0.833em);
-  margin-top: var(--space-xxs);
-
-  // hide element
-  position: absolute;
-  clip: rect(1px, 1px, 1px, 1px);
-}
-
-.form__msg-error--is-visible,
-.form-error-msg--is-visible {
-  position: relative;
-  clip: auto;
-}
-
-// set basic style for (native) radio and checkbox buttons - ⚠️ deprecated
-.radio-list,
-.checkbox-list {
-  // e.g., .radio-list > li > input + label
-  > * {
-    // parent of input + label
-    position: relative;
-    display: flex;
-    align-items: baseline;
-  }
-
-  label {
-    // radio/checkbox labels
-    line-height: var(--body-line-height);
-  }
-
-  input {
-    margin-right: var(--space-xxxs);
-    flex-shrink: 0;
-  }
 }

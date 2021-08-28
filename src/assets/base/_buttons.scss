@@ -1,3 +1,5 @@
+@import "mixins";
+
 .btn {
   position: relative;
   display: inline-flex;
@@ -45,14 +47,9 @@
 .btn--subtle {
   background-color: var(--color-contrast-low);
   color: var(--color-contrast-higher);
-}
-
-.btn--secondary {
-  background-color: var(--color-secondary);
-  color: var(--color-white);
   @media (hover: hover) {
     &:hover {
-      background-color: var(--color-secondary-dark);
+      background-color: lightness(var(--color-contrast-low), 0.95);
     }
   }
 }

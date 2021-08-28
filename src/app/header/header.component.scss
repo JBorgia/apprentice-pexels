@@ -5,7 +5,6 @@
   --anim-menu-btn-size: 48px;
   --anim-menu-btn-icon-size: 32px;
   --anim-menu-btn-icon-stroke: 2px;
-
   --search-input-btn-width: 2.5em;
   --search-input-icon-size: 1.25em;
 
@@ -26,17 +25,17 @@
   transition: transform 0.3s ease;
   box-shadow: 0px 2px 8px 0
       hsla(
-        var(--color-black-h),
-        var(--color-black-s),
-        var(--color-black-l),
-        0.12
+        var(--background-box-shadow-primary-h),
+        var(--background-box-shadow-primary-s),
+        var(--background-box-shadow-primary-l),
+        0.5
       ),
     0px 1px 1px 0
       hsla(
-        var(--color-black-h),
-        var(--color-black-s),
-        var(--color-black-l),
-        0.12
+        var(--background-box-shadow-primary-h),
+        var(--background-box-shadow-primary-s),
+        var(--background-box-shadow-primary-l),
+        0.5
       );
 }
 

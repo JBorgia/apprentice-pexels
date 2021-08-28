@@ -43,25 +43,23 @@
 
 
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-
-<div class="search-input search-input--icon-right">
-  <input class="search-input__input form-control" type="search" name="search-input" id="search-input" placeholder="Search..." aria-label="Search" formControlName="search"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-  <button class="search-input__btn">
-    <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
-  </button>
-</div>
-
-</form>
+            <div class="search-input search-input--icon-right">
+              <input class="search-input__input form-control" type="search" name="search-input" id="search-input" placeholder="Search..." aria-label="Search" formControlName="search"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+              <button class="search-input__btn">
+                <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
+              </button>
+            </div>
+          </form>
 
         </li>
       </ul>
 
       <ul class="f-header__list margin-left-auto@md">
         <li class="f-header__item">
-          <button class="btn btn--primary">Primary</button>
+          <button class="btn btn--primary">Dark Theme</button>
         </li>
         <li class="f-header__item">
-          <a href="#0" class="f-header__btn btn btn--secondary">Button</a>
+          <a href="#0" class="f-header__btn btn btn--subtle">Pause Infinite Scroll</a>
         </li>
       </ul>
     </div>

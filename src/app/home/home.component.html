@@ -27,11 +27,20 @@
             </a>
             <!-- Modal Template -->
             <ng-template #modalTemplate>
-              <h1>{{ pexelPhoto.photographer }}</h1>
-              <img class="gallery__image"
-                srcset="{{pexelPhoto.imageMap.toString()}}"
-                sizes="{{pexelPhoto.imageSize.toString()}}"
-                [src]="pexelPhoto.src.original">
+              <header class="modal__header bg-contrast-lower padding-y-sm padding-x-md flex items-center justify-between shadow-md">
+                <div>
+                  <h4 class="text-truncate">{{ pexelPhoto.photographer }}</h4>
+                </div>
+                <div class="flex justify-end gap-xs">
+                  <button class="btn btn--primary">Download</button>
+                </div>
+              </header>
+              <div class="padding-md">
+                <img class="gallery__image"
+                  srcset="{{pexelPhoto.imageMap.toString()}}"
+                  sizes="{{pexelPhoto.imageSize.toString()}}"
+                  [src]="pexelPhoto.src.original">
+              </div>
             </ng-template>
           </div>
         </div>
@@ -45,5 +54,3 @@
 <ng-template #imageLoadingTemplate>
   <div class="gallery__loading"></div>
 </ng-template>
-
-<!-- <lib-modal id="modal-1"></lib-modal> -->

@@ -11,9 +11,6 @@ export class Modal implements OnInit {
   @Input() id: string;
   private element: any;
 
-  @Input()
-  optionTemplate: TemplateRef<any>;
-
   constructor(
     private el: ElementRef,
     private renderer: Renderer2
