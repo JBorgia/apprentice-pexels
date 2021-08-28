@@ -76,12 +76,12 @@ export class HeaderComponent implements OnInit {
   checkSimpleNavigation(currentTop: any): void {
     if (this.previousTop - currentTop > this.scrollDelta) {
 
-      Util.removeClass(this.mainHeader.nativeElement, 'is-header-hidden');
+      Util.removeClass(this.mainHeader, 'is-header-hidden');
     } else if (
       currentTop - this.previousTop > this.scrollDelta &&
       currentTop > this.scrollOffset
     ) {
-      Util.addClass(this.mainHeader.nativeElement, 'is-header-hidden');
+      Util.addClass(this.mainHeader, 'is-header-hidden');
     }
   }
 

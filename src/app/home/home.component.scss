@@ -1,3 +1,5 @@
+@import "mixins";
+
 :host {
   overflow: auto;
 }
@@ -79,5 +81,29 @@ section {
   }
   100% {
     background-position: 1200px 0;
+  }
+}
+
+.button__pause {
+  position: fixed;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  padding: var(--space-xs);
+  z-index: var(--zindex-fixed-element);
+  border-radius: var(--radius-md);
+  background-color: var(--color-contrast-low);
+  transition: 0.3s;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: lightness(var(--color-contrast-low), 0.95);
+    }
+  }
+
+  .icon {
+    display: block;
+    color: var(--color-contrast-higher);
+    width: 2em;
+    height: 2em;
   }
 }

@@ -7,22 +7,22 @@
 .back-to-top {
   position: fixed;
   right: var(--space-md);
-  bottom: var(--space-md);
+  bottom: var(--space-xxl);
   padding: var(--space-xs);
   z-index: var(--zindex-fixed-element);
   border-radius: var(--radius-md);
-  background-color: var(--color-primary);
+  background-color: var(--color-contrast-low);
   transition: 0.3s;
 
   @media (hover: hover) {
     &:hover {
-      background-color: var(--color-primary-dark);
+      background-color: lightness(var(--color-contrast-low), 0.95);
     }
   }
 
   .icon {
     display: block;
-    color: var(--color-white);
+    color: var(--color-contrast-higher);
     width: var(--btt-icon-size);
     height: var(--btt-icon-size);
   }
