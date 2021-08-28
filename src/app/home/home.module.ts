@@ -4,6 +4,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { InfiniteScrollDirective } from '../directives/scrollable.directive';
 import { ModalModule } from '../library/modal/modal.module';
+import { BackToTopModule } from '../library/back-to-top/back-to-top.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ModalModule } from '../library/modal/modal.module';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    ModalModule
+    ModalModule,
+    BackToTopModule
   ],
 })
 export class HomeModule {}
