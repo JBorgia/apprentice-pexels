@@ -90,7 +90,7 @@ section {
   height: 64px;
   top: calc(50% - 32px);
   left: calc(50% - 32px);
-  background-color: alpha(var(--color-white), 0.9);
+  background-color: alpha(var(--color-primary), 0.75);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -103,7 +103,7 @@ section {
     display: block;
     width: 32px;
     height: 32px;
-    color: var(--color-black);
+    color: var(--color-white);
   }
 }
 

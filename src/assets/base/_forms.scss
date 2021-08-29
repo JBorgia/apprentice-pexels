@@ -82,6 +82,10 @@
     appearance: none;
     display: flex;
     padding: 0 28px 0 var(--space-xs);
+
+    option {
+      color: var(--color-black);
+    }
   }
 
   &::after {
