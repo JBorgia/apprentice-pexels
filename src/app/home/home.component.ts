@@ -1,9 +1,9 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { concatMap, map, scan, switchMap, tap } from 'rxjs/operators';
+import { Component, TemplateRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { map, scan } from 'rxjs/operators';
 import { ModalService } from '../library/modal/modal.service';
 import { PexelsService } from './pexels.service';
-
+import { DownloadService } from '../services/download.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,8 @@ export class HomeComponent {
 
   constructor(
     private pexelsService: PexelsService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private downloadService: DownloadService
   ) {
     window.scrollTo(0, 0);
   }
@@ -66,7 +67,6 @@ export class HomeComponent {
 
   pageCount: number = 1;
   photoCollections: any;
-
   currentPage = 1;
   pageNumberSubject = new BehaviorSubject<number>(1);
   pageSizeAction$ = this.pageNumberSubject.asObservable();
@@ -82,6 +82,11 @@ export class HomeComponent {
 
   open(tpl: TemplateRef<any>) {
     this.modalService.open(tpl);
+  }
+
+  handleImageDownload(imageSrcUrl: string, imageNameUrl: string): void {
+    const splitImageName = this.downloadService.handlePhotoNameFormat(imageNameUrl);
+    this.downloadService.downloadImage(imageSrcUrl, splitImageName);
   }
 
 }
