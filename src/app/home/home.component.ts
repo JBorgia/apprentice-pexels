@@ -1,9 +1,7 @@
-import { Component, TemplateRef } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { map, scan } from 'rxjs/operators';
-import { ModalService } from '../library/modal/modal.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { concatMap, map, scan } from 'rxjs/operators';
 import { PexelsService } from '../services/pexels.service';
-import { DownloadService } from '../services/download.service';
 import { HomeService } from './home.service';
 
 @Component({
@@ -11,31 +9,25 @@ import { HomeService } from './home.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
 
+  currentPage = Math.floor(Math.random() * 100) + 1;
   pauseInfiniteScrollSub: Subscription;
-  isPauseScroll: boolean;
+  isPauseScroll: boolean = false;
+  subs: Subscription[] = [];
 
-  constructor(
-    private pexelsService: PexelsService,
-    private modalService: ModalService,
-    private downloadService: DownloadService,
-    private homeService: HomeService
-  ) {
-    window.scrollTo(0, 0);
-    this.pauseInfiniteScrollSub = this.homeService.changeScrollStatusObs().subscribe((scrollStatus: boolean) => {
-      this.isPauseScroll = scrollStatus;
-    });
-  }
+  pageNumberSubject = new BehaviorSubject<number>(this.currentPage);
+  pageSizeAction$ = this.pageNumberSubject.asObservable();
 
-  posts$ = this.pexelsService.posts$.pipe(
-    map((data: any, mapIndex: any) => {
+  posts$ = this.pageSizeAction$.pipe(
+    concatMap((): Observable<any> => this.pexelsService.curatedPhotos(this.currentPage)),
+    map(ret => [ret]),
+    scan((allPosts: any[], pageUsers: any[]) => [...allPosts, ...pageUsers]),
+      map((data: any, mapIndex: any) => {
       const perColumn = 10;
-
-        let result = data[mapIndex].photos.reduce((resultArray: any, item: any, index: number) => {
+        const result = data[mapIndex].photos.reduce((resultArray: any, item: any, index: number) => {
 
           let isLoadingImage: boolean = true;
-
           let imageMap = [
             `${item.src.medium} 320w`,
             `${item.src.large} 480w`,
@@ -51,12 +43,10 @@ export class HomeComponent {
           let aspectRatioPadding = 100 * item.height / item.width;
             item = {...item, aspectRatioPadding, imageMap, imageSize, isLoadingImage};
             const chunkIndex = Math.floor(index / perColumn);
-
             if(!resultArray[chunkIndex]) {
               resultArray[chunkIndex] = [];
             }
             resultArray[chunkIndex].push(item);
-
           return resultArray;
         }, []);
 
@@ -71,28 +61,35 @@ export class HomeComponent {
     })
   );
 
-  pageCount: number = 1;
-  photoCollections: any;
-  currentPage = 1;
-  pageNumberSubject = new BehaviorSubject<number>(1);
-  pageSizeAction$ = this.pageNumberSubject.asObservable();
-
-  next() {
-    this.isPauseScroll = !this.isPauseScroll;
+  constructor(
+    private pexelsService: PexelsService,
+    private homeService: HomeService
+  ) {
+    window.scrollTo(0, 0);
+    this.subs.push(
+      this.pauseInfiniteScrollSub = this.homeService.changeScrollStatusObs().subscribe((scrollStatus: boolean) => {
+        this.isPauseScroll = scrollStatus;
+      })
+    );
   }
 
-  onScroll() {
-    this.pexelsService.currentPage += 1;
-    this.pexelsService.nextPage(this.pexelsService.currentPage);
+  ngOnInit(): void {
+    this.resetScrollStatus();
   }
 
-  open(tpl: TemplateRef<any>) {
-    this.modalService.open(tpl);
+  resetScrollStatus(): void {
+    if (this.isPauseScroll) {
+      this.homeService.changeScrollStatus();
+    }
   }
 
-  handleImageDownload(imageSrcUrl: string, imageNameUrl: string): void {
-    const splitImageName = this.downloadService.handlePhotoNameFormat(imageNameUrl);
-    this.downloadService.downloadImage(imageSrcUrl, splitImageName);
+  onScroll(): void {
+    this.currentPage += 1;
+    this.pageNumberSubject.next(this.currentPage);
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
 }

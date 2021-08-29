@@ -108,10 +108,11 @@ export class BackToTop implements OnInit, AfterViewInit {
       } else {
         this.dataElement ? Util.scrollTo(0, this.scrollDuration, false, this.scrollElement) : Util.scrollTo(0, this.scrollDuration);
       }
-      //move the focus to the #top-element - don't break keyboard navigation
+      if (this.backTop.nativeElement.length) {
       const focusElement = document.getElementById(this.backTop.nativeElement.getAttribute('href').replace('#', ''));
-      if (focusElement) {
-        Util.moveFocus(focusElement);
+        if (focusElement) {
+          Util.moveFocus(focusElement);
+        }
       }
     });
 
