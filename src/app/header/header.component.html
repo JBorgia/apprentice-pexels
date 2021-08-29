@@ -5,8 +5,7 @@
         <title>Go to homepage</title>
         <path
           d="M37.54 24.08V3.72h4.92v16.37h8.47v4zM60.47 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8 8 0 015.64-2.18 8.07 8.07 0 015.68 2.2 8.49 8.49 0 012 5.69 8.63 8.63 0 01-1.78 5.38 7.6 7.6 0 01-5.89 2.49zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.79 3-2.79 4.26.32 4.23 2.82 4.23zM95.49 24.37a7.82 7.82 0 01-5.73-2.25 8.36 8.36 0 01-2-5.62 8.32 8.32 0 012.08-5.71 8.4 8.4 0 0111.31 0 8.43 8.43 0 012 5.69 8.6 8.6 0 01-1.77 5.38 7.6 7.6 0 01-5.89 2.51zm0-3.67c2.42 0 2.73-3 2.73-4.23s-.31-4.26-2.73-4.26-2.8 3-2.8 4.26.31 4.23 2.83 4.23zM77.66 30c-5.74 0-7-3.25-7.23-4.52l4.6-.26c.41.91 1.17 1.41 2.76 1.41a2.45 2.45 0 002.82-2.53v-2.68a7 7 0 01-1.7 1.75 6.12 6.12 0 01-5.85-.08c-2.41-1.37-3-4.25-3-6.66 0-.89.12-3.67 1.45-5.42a5.67 5.67 0 014.64-2.4c1.2 0 3 .25 4.46 2.82V8.81h4.85v15.33a5.2 5.2 0 01-2.12 4.32A9.92 9.92 0 0177.66 30zm.15-9.66c2.53 0 2.81-2.69 2.81-3.91s-.31-4-2.81-4-2.81 2.8-2.81 4 .27 3.91 2.81 3.91zM55.56 3.72h9.81v2.41h-9.81z"
-          fill="var(--color-contrast-higher)"
-        />
+          fill="var(--color-contrast-higher)"/>
         <circle cx="15" cy="15" r="15" fill="var(--color-primary)" />
       </svg>
     </a>
@@ -15,10 +14,7 @@
       class="reset anim-menu-btn js-anim-menu-btn js-tab-focus f-header__nav-control"
       aria-label="Toggle menu"
       (click)="handleClick($event, fHeader, fHeaderNav)">
-      <i
-        class="anim-menu-btn__icon anim-menu-btn__icon--close"
-        aria-hidden="true"
-      ></i>
+      <i class="anim-menu-btn__icon anim-menu-btn__icon--close" aria-hidden="true"></i>
     </button>
   </div>
 
@@ -55,18 +51,39 @@
         <Li class="f-header__item">
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div class="search-input search-input--icon-right">
-              <input class="search-input__input form-control" type="search" name="search-input" id="search-input" placeholder="Search..." aria-label="Search" formControlName="search"  [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+              <div class="input-group">
+              <div class="input-group__tag">
+                <div class="card-header-select">
+                  <select>
+                    <option>Default</option>
+                    <option>Color</option>
+                  </select>
+                </div>
+              </div>
+              <input class="search-input__input form-control" type="search" name="search-input" id="search-input" placeholder="Search..." aria-label="Search" formControlName="search">
               <button class="search-input__btn">
-                <svg class="icon" viewBox="0 0 24 24"><title>Submit</title><g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g></svg>
+                <svg class="icon" viewBox="0 0 24 24">
+                  <title>Submit</title>
+                  <g stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" stroke="currentColor" fill="none" stroke-miterlimit="10"><line x1="22" y1="22" x2="15.656" y2="15.656"></line><circle cx="10" cy="10" r="8"></circle></g>
+                </svg>
               </button>
+            </div>
             </div>
           </form>
         </Li>
         <li class="f-header__item">
           <ng-container *ngIf="userPrefs | async as userPrefs">
           <button class="btn btn--primary" (click)="handleThemeChange(userPrefs.theme)">
-              <ng-container *ngIf="userPrefs.theme === 'light-theme'; else darkThemeTemplate">
-                <svg class="icon" viewBox="0 0 32 32">
+              <ng-container *ngIf="userPrefs.theme === 'light-theme'; else lightThemeTemplate">
+                <svg class="icon icon--sm" viewBox="0 0 32 32">
+                  <path d="M31.1,18.4c-0.4-0.4-0.9-0.6-1.5-0.4c-1,0.2-2.1,0.5-3.4,0.5c-7,0-12.7-5.7-12.7-12.7c0-1,0.2-2.1,0.5-3.4
+                  c0.1-0.6,0-1.2-0.4-1.5c-0.3-0.4-0.9-0.6-1.5-0.4C5.3,2.4,0.5,8.6,0.5,15.7c0,8.7,7.1,15.8,15.8,15.8c7.1,0,13.3-4.8,15.2-11.5
+                  C31.6,19.5,31.5,18.9,31.1,18.4z M26.2,21.5c0.4,0,0.9,0,1.4-0.1c-2.1,4.3-6.5,7.1-11.4,7.1c-7,0-12.7-5.7-12.7-12.8
+                  c0-4.9,2.7-9.2,7-11.4c0,0.5,0,1,0,1.5C10.5,14.5,17.5,21.5,26.2,21.5z"/>
+                </svg>
+              </ng-container>
+              <ng-template #lightThemeTemplate>
+                <svg class="icon icon--sm" viewBox="0 0 32 32">
                   <g>
                     <path d="M7.5,22.6c-0.5,0-0.9,0.2-1.3,0.5l-1.3,1.3c-0.4,0.4-0.5,0.8-0.5,1.3c0,0.5,0.2,0.9,0.5,1.3c0.4,0.4,0.8,0.5,1.3,0.5
                       c0.5,0,0.9-0.2,1.3-0.5l1.3-1.3c0.7-0.7,0.7-1.9,0-2.6C8.5,22.8,8,22.6,7.5,22.6z"/>
@@ -84,28 +101,34 @@
                     <path d="M16,26.1c-1.1,0-1.8,0.8-1.8,1.8v1.8c0,1.1,0.8,1.8,1.8,1.8c1.1,0,1.8-0.8,1.8-1.8V28C17.8,26.9,17.1,26.1,16,26.1z"/>
                   </g>
                 </svg>
-              </ng-container>
-              <ng-template #darkThemeTemplate>
-                <svg class="icon" viewBox="0 0 32 32">
-                  <path d="M31.1,18.4c-0.4-0.4-0.9-0.6-1.5-0.4c-1,0.2-2.1,0.5-3.4,0.5c-7,0-12.7-5.7-12.7-12.7c0-1,0.2-2.1,0.5-3.4
-                  c0.1-0.6,0-1.2-0.4-1.5c-0.3-0.4-0.9-0.6-1.5-0.4C5.3,2.4,0.5,8.6,0.5,15.7c0,8.7,7.1,15.8,15.8,15.8c7.1,0,13.3-4.8,15.2-11.5
-                  C31.6,19.5,31.5,18.9,31.1,18.4z M26.2,21.5c0.4,0,0.9,0,1.4-0.1c-2.1,4.3-6.5,7.1-11.4,7.1c-7,0-12.7-5.7-12.7-12.8
-                  c0-4.9,2.7-9.2,7-11.4c0,0.5,0,1,0,1.5C10.5,14.5,17.5,21.5,26.2,21.5z"/>
-                </svg>
               </ng-template>
-              <span *ngIf="userPrefs.theme" class="margin-left-xxs">
-                {{userPrefs.theme | replace : '-' : ' ' | titlecase}}
+              <span *ngIf="nextTheme" class="margin-left-xxs">
+                {{nextTheme | replace : '-' : ' ' | titlecase}}
               </span>
           </button>
         </ng-container>
         </li>
         <li class="f-header__item">
           <button class="btn btn--subtle" (click)="handleScrollStatus()">
-            <span>
-              <ng-container *ngIf="isScrollPaused; else scrollStatusTemplate">Resume</ng-container>
-              <ng-template #scrollStatusTemplate>Pause</ng-template>
-              Infinite Scroll
-            </span>
+            <ng-container *ngIf="isScrollPaused; else scrollStatusTemplate">
+              <svg class="icon icon--sm" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+              <path d="M16,0C7.2,0,0,7.2,0,16s7.2,16,16,16s16-7.2,16-16S24.8,0,16,0z M16,30C8.3,30,2,23.7,2,16S8.3,2,16,2s14,6.3,14,14
+                S23.7,30,16,30z"/>
+              <path d="M23.6,15.2l-10-7c-0.3-0.2-0.7-0.2-1-0.1C12.2,8.3,12,8.6,12,9v14c0,0.4,0.2,0.7,0.5,0.9C12.7,24,12.8,24,13,24
+                s0.4-0.1,0.6-0.2l10-7c0.3-0.2,0.4-0.5,0.4-0.8S23.8,15.4,23.6,15.2z M14,21.1V10.9l7.3,5.1L14,21.1z"/>
+              </svg>
+              <span class="margin-left-xxs">Start</span>
+            </ng-container>
+            <ng-template #scrollStatusTemplate>
+              <svg class="icon icon--sm" viewBox="0 0 32 32">
+                <path d="M16,0C7.2,0,0,7.2,0,16s7.2,16,16,16s16-7.2,16-16S24.8,0,16,0z M16,30C8.3,30,2,23.7,2,16S8.3,2,16,2s14,6.3,14,14
+                  S23.7,30,16,30z M14,9h-4c-0.6,0-1,0.4-1,1v12c0,0.6,0.4,1,1,1h4c0.6,0,1-0.4,1-1V10C15,9.4,14.6,9,14,9z M13,21h-2V11h2V21z M22,9
+                  h-4c-0.6,0-1,0.4-1,1v12c0,0.6,0.4,1,1,1h4c0.6,0,1-0.4,1-1V10C23,9.4,22.6,9,22,9z M21,21h-2V11h2V21z"/>
+              </svg>
+              <span class="margin-left-xxs">Pause</span>
+            </ng-template>
+            <span class="margin-left-xxs">Infinite Scroll</span>
           </button>
         </li>
       </ul>

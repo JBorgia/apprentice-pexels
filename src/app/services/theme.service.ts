@@ -4,15 +4,14 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ThemeService {
-
+  activeTheme: string;
+  nextTheme: string;
   userThemes = {
     'light-theme': {
-      name: 'Light Theme',
-      active: false,
+      name: 'Light Theme'
     },
     'dark-theme': {
-      name: 'Dark Theme',
-      active: false,
+      name: 'Dark Theme'
     }
   };
 
@@ -21,12 +20,12 @@ export class ThemeService {
 
   constructor() { }
 
-  setActiveTheme(setTheme: string) {
+  setActiveTheme(changedTheme: string) {
     for (const [index, iterator] of Object.entries(this.userThemes)) {
-      if (setTheme === index) {
-        iterator.active = true;
+      if (changedTheme === index) {
+        this.activeTheme = iterator.name;
       } else {
-        iterator.active = false;
+        this.nextTheme = iterator.name;
       }
     }
   }

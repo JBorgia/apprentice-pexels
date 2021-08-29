@@ -27,3 +27,77 @@
 .form-label {
   display: inline-block;
 }
+
+.input-group {
+  display: flex;
+
+  > * + *:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  > *:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  > *:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.input-group__tag {
+  display: inline-block; // fallback
+  display: flex;
+  align-items: center;
+  padding: 0;
+  background-color: var(--color-contrast-lower);
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+  border-top: 2px solid var(--color-contrast-low);
+  border-bottom: 2px solid var(--color-contrast-low);
+  border-left: 2px solid var(--color-contrast-low);
+  color: var(--color-contrast-medium);
+}
+
+.card-header-select {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding-top: 2px;
+
+  select {
+    cursor: pointer;
+    height: 100%;
+    background-repeat: no-repeat;
+    transition: 0.3s background-color ease;
+    background-image: none;
+    background: transparent;
+    border: 0;
+    text-overflow: ellipsis;
+    color: var(--color-contrast-high);
+    user-select: none;
+    box-shadow: none;
+    appearance: none;
+    display: flex;
+    padding: 0 28px 0 var(--space-xs);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+    pointer-events: none;
+    user-select: none;
+    background-size: 14px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: var(--select-arrow-primary);
+    background-color: transparent;
+  }
+}

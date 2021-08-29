@@ -338,7 +338,7 @@
 
 .search-input {
   position: relative;
-  min-width: 300px;
+  min-width: 380px;
 }
 
 .search-input__input {
@@ -411,5 +411,5 @@
 
 .search-input__btn:focus .icon,
 .search-input .search-input__input:focus + .search-input__btn .icon {
-  color: var(--color-primary);
+  color: var(--color-contrast-high);
 }

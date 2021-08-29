@@ -39,12 +39,12 @@ export class HeaderComponent implements OnInit {
     return this.themeService.userPrefs$;
   }
 
-  get f() {
-    return this.registerForm.controls;
-  }
-
   get isScrollPaused() {
     return this.homeService.isScrollPaused;
+  }
+
+  get nextTheme() {
+    return this.themeService.nextTheme;
   }
 
   handleThemeChange(selectedTheme: string | null) {
@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
       let theme = (selectedTheme === 'light-theme') ? 'dark-theme' : 'light-theme';
       this.themeService.themeSubject$.next({ theme });
       localStorage.setItem('theme', theme);
-      this.themeService.setActiveTheme(selectedTheme);
+      this.themeService.setActiveTheme(theme);
     }
 }
 
