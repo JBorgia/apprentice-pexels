@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Util } from '../util/util';
 import { ThemeService } from '../services/theme.service';
+import { HomeService } from '../home/home.service';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +24,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private homeService: HomeService
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,10 @@ export class HeaderComponent implements OnInit {
     return this.registerForm.controls;
   }
 
+  get isScrollPaused() {
+    return this.homeService.isScrollPaused;
+  }
+
   handleThemeChange(selectedTheme: string | null) {
     if (selectedTheme) {
       let theme = (selectedTheme === 'light-theme') ? 'dark-theme' : 'light-theme';
@@ -53,12 +59,10 @@ export class HeaderComponent implements OnInit {
   onSubmit() {
       this.submitted = true;
 
-      // stop here if form is invalid
       if (this.registerForm.invalid) {
           return;
       }
 
-      // display form values on success
       alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
   }
 
@@ -68,7 +72,7 @@ export class HeaderComponent implements OnInit {
   }
 
   windowScroll() {
-    window.addEventListener('scroll', (event) => {
+    window.addEventListener('scroll', () => {
       if (this.scrollingId) {
         return;
       }
@@ -118,5 +122,9 @@ export class HeaderComponent implements OnInit {
       'f-header__nav--is-visible',
       headerNavStatus
     );
+  }
+
+  handleScrollStatus(): void {
+    this.homeService.changeScrollStatus();
   }
 }

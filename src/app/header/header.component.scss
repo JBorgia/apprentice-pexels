@@ -1,7 +1,7 @@
 @import "breakpoints";
 
 :host {
-  --f-header-logo-width: 104px;
+  --f-header-logo-width: 120px;
   --anim-menu-btn-size: 48px;
   --anim-menu-btn-icon-size: 32px;
   --anim-menu-btn-icon-stroke: 2px;
@@ -190,7 +190,7 @@
     display: inline-block; // fallback
     position: relative;
     border-bottom: none;
-    margin-right: var(--space-xs); // margin between nav items
+    margin-right: var(--space-sm); // margin between nav items
 
     &:last-child {
       margin-right: 0;
@@ -338,6 +338,7 @@
 
 .search-input {
   position: relative;
+  min-width: 300px;
 }
 
 .search-input__input {

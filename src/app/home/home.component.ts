@@ -1,9 +1,10 @@
 import { Component, TemplateRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { map, scan } from 'rxjs/operators';
 import { ModalService } from '../library/modal/modal.service';
-import { PexelsService } from './pexels.service';
+import { PexelsService } from '../services/pexels.service';
 import { DownloadService } from '../services/download.service';
+import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +13,20 @@ import { DownloadService } from '../services/download.service';
 })
 export class HomeComponent {
 
+  pauseInfiniteScrollSub: Subscription;
+  isPauseScroll: boolean;
+
   constructor(
     private pexelsService: PexelsService,
     private modalService: ModalService,
-    private downloadService: DownloadService
+    private downloadService: DownloadService,
+    private homeService: HomeService
   ) {
     window.scrollTo(0, 0);
+    this.pauseInfiniteScrollSub = this.homeService.changeScrollStatusObs().subscribe((scrollStatus: boolean) => {
+      this.isPauseScroll = scrollStatus;
+    });
   }
-
-  isPauseScroll: boolean = false;
 
   posts$ = this.pexelsService.posts$.pipe(
     map((data: any, mapIndex: any) => {
