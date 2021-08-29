@@ -51,6 +51,62 @@ section {
   right: 0;
 }
 
+.gallery__figure {
+  &:hover {
+    a::after {
+      opacity: 1;
+    }
+
+    .gallery__link-icon {
+      opacity: 1;
+    }
+  }
+
+  a {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: alpha(var(--color-black), 0.6);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  }
+}
+
+.gallery__link {
+  text-decoration: none;
+  display: block;
+  color: inherit;
+}
+
+.gallery__link-icon {
+  position: absolute;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  top: calc(50% - 32px);
+  left: calc(50% - 32px);
+  background-color: alpha(var(--color-white), 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+
+  .icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    color: var(--color-black);
+  }
+}
+
 .gallery__image {
   display: block;
   width: 100%;

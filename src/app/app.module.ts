@@ -10,13 +10,15 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReplacePipe } from './pipes/replace.pipe';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    ReplacePipe
+    ReplacePipe,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

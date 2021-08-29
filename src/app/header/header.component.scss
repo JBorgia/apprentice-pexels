@@ -1,7 +1,7 @@
 @import "breakpoints";
 
 :host {
-  --f-header-logo-width: 120px;
+  --f-header-logo-width: 270px;
   --anim-menu-btn-size: 48px;
   --anim-menu-btn-icon-size: 32px;
   --anim-menu-btn-icon-stroke: 2px;
@@ -101,6 +101,15 @@
 
 .f-header__nav-logo-wrapper {
   display: none; // hide logo nav on small devices
+
+  svg {
+    circle {
+      fill: var(--color-primary);
+    }
+    path {
+      fill: var(--color-contrast-higher);
+    }
+  }
 }
 
 .f-header__item {
@@ -144,11 +153,10 @@
 
 @include breakpoint(md) {
   .f-header__mobile-content {
-    display: none; // hide logo + menu (mobile content)
+    display: none;
   }
 
   .f-header__nav {
-    // reset
     position: static;
     padding: 0;
     background-color: transparent;
@@ -163,7 +171,7 @@
 
     // new style
     height: var(--f-header-height);
-    font-size: var(--text-base); // edit font size of all nav elements
+    font-size: var(--text-base);
 
     &::before {
       // reset
@@ -172,7 +180,7 @@
   }
 
   .f-header__nav-logo-wrapper {
-    display: block; // fallback
+    display: block;
     display: flex;
   }
 
@@ -334,6 +342,7 @@
 
 .is-header-hidden {
   transform: translate3d(0, -100%, 0);
+  box-shadow: none;
 }
 
 .search-input {
@@ -369,6 +378,7 @@
 }
 
 .search-input__btn {
+  cursor: pointer;
   background-color: transparent;
   padding: 0;
   border: 0;
