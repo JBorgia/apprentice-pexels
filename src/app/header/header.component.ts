@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Util } from '../util/util';
 import { ThemeService } from '../services/theme.service';
 import { HomeService } from '../home/home.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -19,20 +20,25 @@ export class HeaderComponent implements OnInit {
   scrollDelta = 10;
   scrollOffset = 150;
 
-  registerForm: FormGroup;
+  searchForm: FormGroup;
   submitted = false;
+  isDefaultInputActive: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
     private themeService: ThemeService,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.formBuilder.group({
-      search: ['', Validators.required],
+    this.searchForm = this.formBuilder.group({
+      searchType: ['Default', Validators.required],
+      searchStringDefault: [{value: '', disabled: false}, Validators.required],
+      searchStringHexColor: [{value: '#000000', disabled: true}, Validators.required],
     });
     this.windowScroll();
+    this.handleSearchFormTypeChange();
   }
 
   get userPrefs() {
@@ -47,6 +53,24 @@ export class HeaderComponent implements OnInit {
     return this.themeService.nextTheme;
   }
 
+  handleSearchFormTypeChange(): void {
+    const searchType = this.searchForm.get('searchType');
+    const searchStringDefault = this.searchForm.get('searchStringDefault');
+    const searchStringHexColor = this.searchForm.get('searchStringHexColor');
+
+    searchType?.valueChanges.subscribe((data: string) => {
+      if (data === 'Default') {
+        searchStringHexColor?.disable();
+        searchStringDefault?.enable();
+        this.isDefaultInputActive = true;
+      } else {
+        searchStringDefault?.disable();
+        searchStringHexColor?.enable();
+        this.isDefaultInputActive = false;
+      }
+    });
+  }
+
   handleThemeChange(selectedTheme: string | null) {
     if (selectedTheme) {
       let theme = (selectedTheme === 'light-theme') ? 'dark-theme' : 'light-theme';
@@ -59,16 +83,18 @@ export class HeaderComponent implements OnInit {
   onSubmit() {
       this.submitted = true;
 
-      if (this.registerForm.invalid) {
+      if (this.searchForm.invalid) {
           return;
       }
 
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerForm.value, null, 4));
+      this.router.navigate([ 'search' ], { queryParams: { searchType: 'deafult', searchValue: '' } });
+
+      // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.searchForm.value, null, 4));
   }
 
   onReset() {
       this.submitted = false;
-      this.registerForm.reset();
+      this.searchForm.reset();
   }
 
   windowScroll() {

@@ -1,3 +1,36 @@
+input[type="color"] {
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch,
+input[type="color"]::-moz-color-swatch,
+input[type="color"]::-moz-color-swatch {
+  border-color: transparent;
+  border: 0;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  height: 18px !important;
+  width: 30px !important;
+  padding: 0 !important;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+input[type="color"]::-moz-color-swatch {
+  border-radius: 2px;
+  padding: 0 !important;
+  width: 28px;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 2px;
+  padding: 0 !important;
+}
+
 .form-control {
   font-size: var(--form-control-font-size, 1em);
   padding-top: var(--form-control-padding-y, 0.5em);
@@ -9,7 +42,14 @@
   background-color: var(--color-bg);
   border: 2px solid var(--color-contrast-low);
   transition: 0.2s;
+  min-height: 36px;
   outline: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-contrast-lowest);
+    }
+  }
 
   &:focus {
     border: 2px solid var(--color-primary);
@@ -61,7 +101,7 @@
   color: var(--color-contrast-medium);
 }
 
-.card-header-select {
+.custom-select {
   position: relative;
   height: 100%;
   width: 100%;
