@@ -4,6 +4,8 @@ import { Util } from '../util/util';
 import { ThemeService } from '../services/theme.service';
 import { HeaderService } from './header.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { debounce, debounceTime, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -24,10 +26,23 @@ export class HeaderComponent implements OnInit {
   isFormSubmitted: boolean = false;
   isDefaultInputActive: boolean = true;
 
+  queryParams$ = this.activatedRoute.queryParams.pipe(
+    tap(data => {
+      if (data.color) {
+        this.searchForm.get('searchType')?.setValue('color');
+        this.searchForm.get('searchStringHexColor')?.setValue(data.color);
+      }
+      if (data.query) {
+        this.searchForm.get('searchStringDefault')?.patchValue(data.query);
+      }
+    })
+  );
+
   constructor(
     private formBuilder: FormBuilder,
     private themeService: ThemeService,
     private headerService: HeaderService,
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
@@ -39,6 +54,7 @@ export class HeaderComponent implements OnInit {
     });
     this.windowScroll();
     this.handleSearchFormTypeChange();
+    this.queryParams$.subscribe();
   }
 
   get userPrefs() {
@@ -55,7 +71,6 @@ export class HeaderComponent implements OnInit {
 
   handleSearchFormTypeChange(): void {
     const searchType: AbstractControl | null = this.searchForm.get('searchType');
-    const searchStringDefault: AbstractControl | null = this.searchForm.get('searchStringDefault');
     const searchStringHexColor: AbstractControl | null = this.searchForm.get('searchStringHexColor');
 
     searchType?.valueChanges.subscribe((data: string) => {
@@ -110,14 +125,14 @@ export class HeaderComponent implements OnInit {
       }
   }
 
-  sanitizeString(value: string) {
+  sanitizeString(value: string): string {
     value = value.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
     return value.trim();
 }
 
-  onReset() {
-      this.isFormSubmitted = false;
-      this.searchForm.reset();
+  onReset(): void {
+    this.isFormSubmitted = false;
+    this.searchForm.reset();
   }
 
   windowScroll(): void {
@@ -155,7 +170,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  handleClick(event: Event, headerEl: any, headerNavEl: any) {
+  handleClick(event: Event, headerEl: any, headerNavEl: any): void {
     event.preventDefault();
     const status = !Util.hasClass(event.target, 'anim-menu-btn--state-b');
     const headerStatus = !Util.hasClass(headerEl, 'f-header--expanded');
