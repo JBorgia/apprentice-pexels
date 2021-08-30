@@ -93,7 +93,10 @@
                   <input class="search-input__input form-control" type="search" name="search-input-deafult" placeholder="Search..." aria-label="Search" formControlName="searchStringDefault">
                 </ng-container>
                 <ng-template #colorInputTemplate>
-                  <input class="color-input__input form-control" type="color" name="search-input-color" aria-label="Color" formControlName="searchStringHexColor">
+                  <div class="input-merger">
+                    <input class="input-merger__input-left search-input__input reset" type="search" name="search-input-deafult" placeholder="Search..." aria-label="Search" formControlName="searchStringDefault">
+                    <input class="input-merger__input-right color-input__input reset" type="color" name="search-input-color" aria-label="Color" formControlName="searchStringHexColor">
+                  </div>
                 </ng-template>
 
                 <button class="search-input__btn">

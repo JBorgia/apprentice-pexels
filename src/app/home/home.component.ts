@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   pageNumberObs$ = this.pageNumberBehaviorSub.asObservable();
 
   photoColumns$ = this.pageNumberObs$.pipe(
-    concatMap((): Observable<any> => this.pexelsService.curatedPhotos(this.currentPage)),
+    concatMap((): Observable<any> => this.pexelsService.getCuratedPhotos(this.currentPage)),
     map(ret => [ret]),
     scan((allPosts: any[], pageUsers: any[]) => [...allPosts, ...pageUsers]),
       map((data: any, mapIndex: any) => {

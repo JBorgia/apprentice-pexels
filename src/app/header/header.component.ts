@@ -61,11 +61,8 @@ export class HeaderComponent implements OnInit {
     searchType?.valueChanges.subscribe((data: string) => {
       if (data === 'default') {
         searchStringHexColor?.disable();
-        searchStringDefault?.enable();
         this.isDefaultInputActive = true;
       } else {
-        searchStringDefault?.disable();
-        searchStringDefault?.setValue(null);
         searchStringHexColor?.enable();
         this.isDefaultInputActive = false;
       }
@@ -91,18 +88,23 @@ export class HeaderComponent implements OnInit {
       const searchType: string = this.searchForm.get('searchType')?.value;
       const searchStringDefault: string = this.searchForm.get('searchStringDefault')?.value;
       const searchStringHexColor: string = this.searchForm.get('searchStringHexColor')?.value;
-      let searchValue: string;
 
-      if (searchStringDefault) {
-        searchValue = this.sanitizeString(searchStringDefault).toLowerCase();
-      } else if (searchStringHexColor) {
-        console.log(searchStringHexColor);
-        searchValue = searchStringHexColor;
+      let query: string;
+      let color: string;
+
+      if (searchType === 'default') {
+        query = this.sanitizeString(searchStringDefault).toLowerCase();
+        this.router.navigate([ 'search' ], { queryParams: { query } });
+
+      } else if (searchType === 'color') {
+
+        query = this.sanitizeString(searchStringDefault).toLowerCase();
+        color = searchStringHexColor;
+
+        this.router.navigate([ 'search' ], { queryParams: { query, color } });
       } else {
         throw new Error('Unexpected form values returned');
       }
-
-      this.router.navigate([ 'search' ], { queryParams: { searchType, searchValue } });
   }
 
   sanitizeString(value: string) {
