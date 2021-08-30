@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { concatMap, map, scan } from 'rxjs/operators';
+import { map, scan, switchMap, takeWhile } from 'rxjs/operators';
 import { PexelsService } from '../services/pexels.service';
-import { HomeService } from './home.service';
+import { HeaderService } from '../header/header.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   pageNumberObs$ = this.pageNumberBehaviorSub.asObservable();
 
   photoColumns$ = this.pageNumberObs$.pipe(
-    concatMap((): Observable<any> => this.pexelsService.getCuratedPhotos(this.currentPage)),
+    switchMap((): Observable<any> => this.pexelsService.getCuratedPhotos(this.currentPage)),
     map(ret => [ret]),
     scan((allPosts: any[], pageUsers: any[]) => [...allPosts, ...pageUsers]),
       map((data: any, mapIndex: any) => {
@@ -52,6 +52,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
       return result;
     }),
+    takeWhile((data) => {
+      return data.length;
+    }),
     scan((allPosts: any[], pageUsers: any[]) => {
       return [
         [...allPosts[0], ...pageUsers[0]],
@@ -63,11 +66,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private pexelsService: PexelsService,
-    private homeService: HomeService
+    private headerService: HeaderService
   ) {
     window.scrollTo(0, 0);
     this.subs.push(
-      this.pauseInfiniteScrollSub = this.homeService.changeScrollStatusObs().subscribe((scrollStatus: boolean) => {
+      this.pauseInfiniteScrollSub = this.headerService.changeScrollStatusObs().subscribe((scrollStatus: boolean) => {
         this.isPauseScroll = scrollStatus;
       })
     );
@@ -79,7 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   resetScrollStatus(): void {
     if (this.isPauseScroll) {
-      this.homeService.changeScrollStatus();
+      this.headerService.changeScrollStatus();
     }
   }
 

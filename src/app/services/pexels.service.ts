@@ -11,7 +11,7 @@ export class PexelsService {
   private readonly _searchPhotos: string = `${this._pexelsAPI}/search`;
   private readonly _requestHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + '563492ad6f91700001000001ae87d3dc03f74053bdfdd1ca0729e076'
+    'Authorization': 'Bearer ' + '563492ad6f91700001000001cf90ff95995f419da77b43146fa201e6'
   });
 
   constructor(private http: HttpClient) { }
@@ -44,7 +44,7 @@ export class PexelsService {
   }
 
   getSearchPhotos(pageNumber: number, query: string, color?: string): Observable<any> {
-    const queryStringSettings: any = { query, color, pageNumber };
+    const queryStringSettings: any = { pageNumber, query, color };
     const params = this.handleQueryParamCreation(queryStringSettings);
 
     return this.http.get(this._searchPhotos, {

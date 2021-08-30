@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Util } from '../util/util';
 import { ThemeService } from '../services/theme.service';
-import { HomeService } from '../home/home.service';
+import { HeaderService } from './header.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private themeService: ThemeService,
-    private homeService: HomeService,
+    private headerService: HeaderService,
     private router: Router
   ) {}
 
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       searchType: ['default', Validators.required],
       searchStringDefault: [{value: '', disabled: false}, Validators.required],
-      searchStringHexColor: [{value: '#000000', disabled: true}, Validators.required],
+      searchStringHexColor: [{value: '#F00000', disabled: true}, Validators.required],
     });
     this.windowScroll();
     this.handleSearchFormTypeChange();
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get isScrollPaused() {
-    return this.homeService.isScrollPaused;
+    return this.headerService.isScrollPaused;
   }
 
   get nextTheme() {
@@ -101,7 +101,10 @@ export class HeaderComponent implements OnInit {
         query = this.sanitizeString(searchStringDefault).toLowerCase();
         color = searchStringHexColor;
 
-        this.router.navigate([ 'search' ], { queryParams: { query, color } });
+        this.router.navigate(
+          [ 'search' ],
+          { queryParams: { query, color }}
+        );
       } else {
         throw new Error('Unexpected form values returned');
       }
@@ -171,6 +174,6 @@ export class HeaderComponent implements OnInit {
   }
 
   handleScrollStatus(): void {
-    this.homeService.changeScrollStatus();
+    this.headerService.changeScrollStatus();
   }
 }

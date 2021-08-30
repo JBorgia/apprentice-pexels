@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class HomeService {
+export class HeaderService {
 
   private isScrollPausedBehaviorSub = new BehaviorSubject<boolean>(false);
   isScrollPaused: boolean = false;
