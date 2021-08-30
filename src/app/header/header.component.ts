@@ -50,7 +50,10 @@ export class HeaderComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       searchType: ['default', Validators.required],
       searchStringDefault: [{value: '', disabled: false}, Validators.required],
-      searchStringHexColor: [{value: '#F00000', disabled: true}, Validators.required],
+      searchStringHexColor: [{
+          value: window.getComputedStyle(document.body).getPropertyValue('--color-primary-picker-rgb'),
+          disabled: true
+        }, Validators.required]
     });
     this.windowScroll();
     this.handleSearchFormTypeChange();
