@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Util } from '../util/util';
 import { ThemeService } from '../services/theme.service';
 import { HomeService } from '../home/home.service';
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   scrollOffset = 150;
 
   searchForm: FormGroup;
-  submitted = false;
+  isFormSubmitted: boolean = false;
   isDefaultInputActive: boolean = true;
 
   constructor(
@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-      searchType: ['Default', Validators.required],
+      searchType: ['default', Validators.required],
       searchStringDefault: [{value: '', disabled: false}, Validators.required],
       searchStringHexColor: [{value: '#000000', disabled: true}, Validators.required],
     });
@@ -54,17 +54,18 @@ export class HeaderComponent implements OnInit {
   }
 
   handleSearchFormTypeChange(): void {
-    const searchType = this.searchForm.get('searchType');
-    const searchStringDefault = this.searchForm.get('searchStringDefault');
-    const searchStringHexColor = this.searchForm.get('searchStringHexColor');
+    const searchType: AbstractControl | null = this.searchForm.get('searchType');
+    const searchStringDefault: AbstractControl | null = this.searchForm.get('searchStringDefault');
+    const searchStringHexColor: AbstractControl | null = this.searchForm.get('searchStringHexColor');
 
     searchType?.valueChanges.subscribe((data: string) => {
-      if (data === 'Default') {
+      if (data === 'default') {
         searchStringHexColor?.disable();
         searchStringDefault?.enable();
         this.isDefaultInputActive = true;
       } else {
         searchStringDefault?.disable();
+        searchStringDefault?.setValue(null);
         searchStringHexColor?.enable();
         this.isDefaultInputActive = false;
       }
@@ -80,24 +81,41 @@ export class HeaderComponent implements OnInit {
     }
 }
 
-  onSubmit() {
-      this.submitted = true;
+  onSubmit(): void {
+      this.isFormSubmitted = true;
 
       if (this.searchForm.invalid) {
-          return;
+        return;
       }
 
-      this.router.navigate([ 'search' ], { queryParams: { searchType: 'deafult', searchValue: '' } });
+      const searchType: string = this.searchForm.get('searchType')?.value;
+      const searchStringDefault: string = this.searchForm.get('searchStringDefault')?.value;
+      const searchStringHexColor: string = this.searchForm.get('searchStringHexColor')?.value;
+      let searchValue: string;
 
-      // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.searchForm.value, null, 4));
+      if (searchStringDefault) {
+        searchValue = this.sanitizeString(searchStringDefault).toLowerCase();
+      } else if (searchStringHexColor) {
+        console.log(searchStringHexColor);
+        searchValue = searchStringHexColor;
+      } else {
+        throw new Error('Unexpected form values returned');
+      }
+
+      this.router.navigate([ 'search' ], { queryParams: { searchType, searchValue } });
   }
 
+  sanitizeString(value: string) {
+    value = value.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    return value.trim();
+}
+
   onReset() {
-      this.submitted = false;
+      this.isFormSubmitted = false;
       this.searchForm.reset();
   }
 
-  windowScroll() {
+  windowScroll(): void {
     window.addEventListener('scroll', () => {
       if (this.scrollingId) {
         return;
