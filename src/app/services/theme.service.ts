@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
+import { UserPreferences } from '../models/user-preferences';
+import { UserThemes } from '../models/user-themes';
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
   activeTheme: string;
   nextTheme: string;
-  userThemes = {
+  userThemes: UserThemes = {
     'light-theme': {
       name: 'Light Theme'
     },
@@ -16,11 +18,11 @@ export class ThemeService {
   };
 
   themeSubject$: ReplaySubject<UserPreferences> = new ReplaySubject<UserPreferences>();
-  userPrefs$ = this.themeSubject$.asObservable();
+  userPrefs$: Observable<UserPreferences> = this.themeSubject$.asObservable();
 
   constructor() { }
 
-  setActiveTheme(changedTheme: string) {
+  setActiveTheme(changedTheme: string): void {
     for (const [index, iterator] of Object.entries(this.userThemes)) {
       if (changedTheme === index) {
         this.activeTheme = iterator.name;
@@ -29,12 +31,4 @@ export class ThemeService {
       }
     }
   }
-}
-
-export interface UserPreferences {
-  theme: string | null;
-}
-
-export interface UserThemes {
-  [theme: string]: string;
 }

@@ -16,10 +16,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   isPauseScroll: boolean = false;
   subs: Subscription[] = [];
 
-  pageNumberSubject = new BehaviorSubject<number>(this.currentPage);
-  pageSizeAction$ = this.pageNumberSubject.asObservable();
+  pageNumberBehaviorSub = new BehaviorSubject<number>(this.currentPage);
+  pageNumberObs$ = this.pageNumberBehaviorSub.asObservable();
 
-  posts$ = this.pageSizeAction$.pipe(
+  photoColumns$ = this.pageNumberObs$.pipe(
     concatMap((): Observable<any> => this.pexelsService.curatedPhotos(this.currentPage)),
     map(ret => [ret]),
     scan((allPosts: any[], pageUsers: any[]) => [...allPosts, ...pageUsers]),
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onScroll(): void {
     this.currentPage += 1;
-    this.pageNumberSubject.next(this.currentPage);
+    this.pageNumberBehaviorSub.next(this.currentPage);
   }
 
   ngOnDestroy(): void {

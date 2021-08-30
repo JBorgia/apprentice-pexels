@@ -6,7 +6,7 @@
   [infiniteScrollDisabled]="isPauseScroll"
   (scrolled)="onScroll()">
     <app-gallery
-      *ngIf="posts$ | async as columns"
+      *ngIf="photoColumns$ | async as columns"
       [pexelColumns]="columns">
     </app-gallery>
   </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ThemeService, UserPreferences } from './services/theme.service';
+import { ThemeService } from './services/theme.service';
+import { UserPreferences } from './models/user-preferences';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -31,8 +32,8 @@ export class AppComponent implements OnInit {
       this.themeService.setActiveTheme(preferredThemeValue);
     } else {
       const localStorageTheme = localStorage.getItem('theme');
-      this.themeService.themeSubject$.next({ theme: localStorageTheme });
       if (localStorageTheme) {
+        this.themeService.themeSubject$.next({ theme: localStorageTheme });
         this.themeService.setActiveTheme(localStorageTheme);
       }
     }
@@ -40,7 +41,7 @@ export class AppComponent implements OnInit {
 
   checkOSPreferredAppearance(): string {
     const isLightThemePreferred: boolean = window.matchMedia('(prefers-color-scheme: light)').matches;
-    let preferredThemeValue: string;
+    let preferredThemeValue: 'light-theme' | 'dark-theme';
     if (isLightThemePreferred) {
       preferredThemeValue = 'light-theme';
     } else {

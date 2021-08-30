@@ -11,7 +11,6 @@ import { DirectivesModule } from '../directives/directives.module';
   declarations: [
     HomeComponent
   ],
-  exports: [],
   imports: [
     CommonModule,
     HomeRoutingModule,
