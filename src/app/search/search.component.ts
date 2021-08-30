@@ -28,16 +28,16 @@ export class SearchComponent implements OnInit {
       }),
       map((data: PexelData) => {
         const perColumn = 10;
-        const result = data.photos.reduce((resultArray: any, photo: any, index: number) => {
+        const result: any = data.photos.reduce((resultArray: any, photo: any, index: number) => {
           let isLoadingImage: boolean = true;
           let imageMap = [
             `${photo.src.medium} 320w`,
             `${photo.src.large} 480w`,
-            `${photo.src.large2x} 800w` ];
+            `${photo.src.large2x} 800w`];
           let imageSize = [
             "(max-width: 320px) 280px",
             "(max-width: 480px) 440px",
-            "800px" ];
+            "800px"];
 
           let aspectRatioPadding = 100 * photo.height / photo.width;
             photo = {...photo, aspectRatioPadding, imageMap, imageSize, isLoadingImage};
