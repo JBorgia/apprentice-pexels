@@ -26,14 +26,6 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "allowedCommonJsDependencies": [
-              "firebase/app",
-              "@firebase/app",
-              "@angular/fire",
-              "@firebase/util",
-              "@firebase/component",
-              "@firebase/firestore"
-            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
