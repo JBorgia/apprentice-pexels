@@ -9,7 +9,7 @@ import { Component, ViewEncapsulation, ElementRef, Input, OnInit, Renderer2 } fr
 export class Modal implements OnInit {
 
   @Input() id: string;
-  private element: any;
+  private element: Element;
 
   constructor(
     private el: ElementRef,

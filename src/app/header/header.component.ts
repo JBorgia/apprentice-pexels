@@ -84,7 +84,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  handleThemeChange(selectedTheme: string | null) {
+  handleThemeChange(selectedTheme: string | null): void {
     if (selectedTheme) {
       let theme = (selectedTheme === 'light-theme') ? 'dark-theme' : 'light-theme';
       this.themeService.themeSubject$.next({ theme });
@@ -158,7 +158,7 @@ export class HeaderComponent implements OnInit {
     this.scrollingId = false;
   }
 
-  checkSimpleNavigation(currentTop: any): void {
+  checkSimpleNavigation(currentTop: number): void {
     if (this.previousTop - currentTop > this.scrollDelta) {
 
       Util.removeClass(this.mainHeader, 'is-header-hidden');
@@ -170,7 +170,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  handleClick(event: Event, headerEl: any, headerNavEl: any): void {
+  handleClick(event: Event, headerEl: Element, headerNavEl: Element): void {
     event.preventDefault();
     const status = !Util.hasClass(event.target, 'anim-menu-btn--state-b');
     const headerStatus = !Util.hasClass(headerEl, 'f-header--expanded');

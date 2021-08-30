@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, scan, switchMap, takeWhile } from 'rxjs/operators';
 import { PexelsService } from '../services/pexels.service';
 import { HeaderService } from '../header/header.service';
+import { PexelData } from '../models/pexel-data';
 
 @Component({
   selector: 'search',
@@ -22,48 +23,43 @@ export class SearchComponent implements OnInit {
 
   photoColumns$ = combineLatest([this.queryParams$, this.pageNumberObs$])
     .pipe(
-      switchMap((data): Observable<any> => {
+      switchMap((data): Observable<PexelData> => {
         return this.pexelsService.getSearchPhotos(this.currentPage, data[0]?.query, data[0]?.color)
       }),
-      map((data: any) => {
+      map((data: PexelData) => {
         const perColumn = 10;
-        const result = data.photos.reduce((resultArray: any, item: any, index: number) => {
-
+        const result = data.photos.reduce((resultArray: any, photo: any, index: number) => {
           let isLoadingImage: boolean = true;
           let imageMap = [
-            `${item.src.medium} 320w`,
-            `${item.src.large} 480w`,
-            `${item.src.large2x} 800w` ];
-
+            `${photo.src.medium} 320w`,
+            `${photo.src.large} 480w`,
+            `${photo.src.large2x} 800w` ];
           let imageSize = [
             "(max-width: 320px) 280px",
             "(max-width: 480px) 440px",
             "800px" ];
 
-          let aspectRatioPadding = 100 * item.height / item.width;
-            item = {...item, aspectRatioPadding, imageMap, imageSize, isLoadingImage};
+          let aspectRatioPadding = 100 * photo.height / photo.width;
+            photo = {...photo, aspectRatioPadding, imageMap, imageSize, isLoadingImage};
             const chunkIndex = Math.floor(index / perColumn);
             if(!resultArray[chunkIndex]) {
               resultArray[chunkIndex] = [];
             }
-            resultArray[chunkIndex].push(item);
+            resultArray[chunkIndex].push(photo);
           return resultArray;
         }, []);
 
         return result;
       }),
-      takeWhile((data) => {
-        return data.length;
-      }),
-      scan((allPosts: any[], pageUsers: any[]) => {
-        return [
-          [...allPosts[0], ...pageUsers[0]],
-          [...allPosts[1], ...pageUsers[1]],
-          [...allPosts[2], ...pageUsers[2]],
-        ]
-      }),
-    );
-
+      takeWhile((data) => data.length),
+      scan((previousPhotos: any[], currentPhotos: any[]) => {
+      return [
+        [...previousPhotos[0], ...currentPhotos[0]],
+        [...previousPhotos[1], ...currentPhotos[1]],
+        [...previousPhotos[2], ...currentPhotos[2]],
+      ]
+    })
+  );
 
   constructor(
     private activatedRoute: ActivatedRoute,

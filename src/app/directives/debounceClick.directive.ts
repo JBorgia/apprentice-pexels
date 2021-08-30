@@ -14,31 +14,28 @@ import { debounceTime } from 'rxjs/operators';
   selector: '[appDebounceClick]'
 })
 export class DebounceClickDirective implements OnInit, OnDestroy {
-  @Input()
-  debounceTime = 500;
-
-  @Output()
-  debounceClick = new EventEmitter();
-
-  private clicks = new Subject();
-  private subscription: Subscription;
-
-  constructor() { }
-
-  ngOnInit() {
-    this.subscription = this.clicks.pipe(
-      debounceTime(this.debounceTime)
-    ).subscribe(e => this.debounceClick.emit(e));
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  @Input() debounceTime: number = 500;
+  @Output() debounceClick: EventEmitter<Event> = new EventEmitter();
 
   @HostListener('click', ['$event'])
   clickEvent(event: Event) {
     event.preventDefault();
     event.stopPropagation();
     this.clicks.next(event);
+  }
+
+  private clicks: Subject<Event> = new Subject();
+  private subscription: Subscription;
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.subscription = this.clicks.pipe(
+      debounceTime(this.debounceTime)
+    ).subscribe(e => this.debounceClick.emit(e));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

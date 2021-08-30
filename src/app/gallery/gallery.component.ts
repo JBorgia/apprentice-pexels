@@ -8,7 +8,6 @@ import { ModalService } from '../library/modal/modal.service';
   styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent implements OnInit {
-
   @Input() pexelColumns: any;
 
   constructor(

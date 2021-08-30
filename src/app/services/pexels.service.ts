@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Params } from '@angular/router';
 import { Observable } from 'rxjs';
+import { PexelData } from '../models/pexel-data';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,7 @@ export class PexelsService {
 
   constructor(private http: HttpClient) { }
 
-  private handleQueryParamCreation(paramSettings: any): HttpParams {
+  private handleQueryParamCreation(paramSettings: Params): HttpParams {
     if (paramSettings.color) {
       const params = new HttpParams()
         .set('query', paramSettings.query)
@@ -33,8 +35,8 @@ export class PexelsService {
     }
   }
 
-  getCuratedPhotos(pageNumber: number): Observable<any> {
-    return this.http.get(this._curatedPhotos, {
+  getCuratedPhotos(pageNumber: number): Observable<PexelData> {
+    return this.http.get<PexelData>(this._curatedPhotos, {
       headers: this._requestHeaders,
       params: {
         per_page: 30,
@@ -43,11 +45,11 @@ export class PexelsService {
     });
   }
 
-  getSearchPhotos(pageNumber: number, query: string, color?: string): Observable<any> {
+  getSearchPhotos(pageNumber: number, query: string, color?: string): Observable<PexelData> {
     const queryStringSettings: any = { pageNumber, query, color };
     const params = this.handleQueryParamCreation(queryStringSettings);
 
-    return this.http.get(this._searchPhotos, {
+    return this.http.get<PexelData>(this._searchPhotos, {
       headers: this._requestHeaders,
       params
     });
